@@ -1,0 +1,75 @@
+<h1>Listing languages</h1>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "banner_chart"
+      },
+      title: {
+        text: "Clicks per day"
+      },
+      xAxis: {  
+        type: "datetime",
+        labels: {
+          formatter: function() {
+           return Highcharts.dateFormat("%b %e, %Y", this.value);
+          }
+        }
+      },
+      yAxis: {
+        title: {
+          text: "Number of Letters"
+        }
+      },
+      tooltip: {
+        formatter: function() {
+          return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' + 
+                 Highcharts.numberFormat(this.y, 0) + ' letters';
+        }
+      },
+      series: [{
+        name: 'Clicks',
+        pointInterval: <%= 1.day * 1000 %>,
+        pointStart: <%= 1.week.ago.to_i * 1000 %>,
+        pointEnd: <%= Date.today.to_time.to_i * 1000 %>,
+        data: <%= (1.week.ago.to_date..Date.today).map {|date| Language.total_on(date)}.inspect %>
+       
+      }]
+    });
+  });
+</script>
+
+<div id="banner_chart" style="width:400px; height: 200px;"></div>
+<br />
+<br />
+
+
+
+<table>
+  <tr>
+    <th>Lang code</th>
+    <th>Lang name</th>
+    <th>Short code</th>
+    <th>I18n identifier</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @languages.each do |language| %>
+  <tr>
+    <td><%= language.lang_code %></td>
+    <td><%= language.lang_name %></td>
+    <td><%= language.short_code %></td>
+    <td><%= language.i18n_identifier %></td>
+    <td><%= link_to 'Show', language %></td>
+    <td><%= link_to 'Edit', edit_language_path(language) %></td>
+    <td><%= link_to 'Destroy', language, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Language', new_language_path %>

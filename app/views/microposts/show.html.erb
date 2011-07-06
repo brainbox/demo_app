@@ -10,6 +10,11 @@
   <%= @micropost.user_id %>
 </p>
 
+<p>
+  <b>User Name:</b>
+  <%= @micropost.user.name %>
+</p>
+
 
 <%= link_to 'Edit', edit_micropost_path(@micropost) %> |
 <%= link_to 'Back', microposts_path %>

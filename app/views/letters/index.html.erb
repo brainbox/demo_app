@@ -1,0 +1,73 @@
+<h1>Listing letters</h1>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "banner_chart"
+      },
+      title: {
+        text: "Clicks per day"
+      },
+      xAxis: {  
+        type: "datetime",
+        labels: {
+          formatter: function() {
+           return Highcharts.dateFormat("%b %e, %Y", this.value);
+          }
+        }
+      },
+      yAxis: {
+        title: {
+          text: "Number of Clicks"
+        }
+      },
+      tooltip: {
+        formatter: function() {
+          return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' + 
+                 Highcharts.numberFormat(this.y, 0) + ' letters';
+        }
+      },
+      series: [{
+        name: 'Clicks',
+        pointInterval: <%= 1.day * 1000 %>,
+        pointStart: <%= 1.week.ago.to_i * 1000 %>,
+        pointEnd: <%= Date.today.to_time.to_i * 1000 %>,
+        data: <%= (1.week.ago.to_date..Date.today).map {|date| Letter.total_on(date)}.inspect %>
+       
+      }]
+    });
+  });
+</script>
+
+<div id="banner_chart" style="width:400px; height: 200px;"></div>
+<br />
+<br />
+
+<table>
+  <tr>
+    <th>Letter campaign</th>
+    <th>Language</th>
+    <th>Supporter</th>
+    <th>Country code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @letters.each do |letter| %>
+  <tr>
+    <td><%= letter.letter_campaign_id %></td>
+    <td><%= letter.language_id %></td>
+    <td><%= letter.supporter_id %></td>
+    <td><%= letter.country_code %></td>
+    <td><%= link_to 'Show', letter %></td>
+    <td><%= link_to 'Edit', edit_letter_path(letter) %></td>
+    <td><%= link_to 'Destroy', letter, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Letter', new_letter_path %>

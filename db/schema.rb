@@ -10,7 +10,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110406193827) do
+ActiveRecord::Schema.define(:version => 20110705113730) do
+
+  create_table "languages", :force => true do |t|
+    t.string   "lang_code"
+    t.string   "lang_name"
+    t.string   "short_code"
+    t.string   "i18n_identifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "letter_campaigns", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "language_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "letters", :force => true do |t|
+    t.integer  "letter_campaign_id"
+    t.integer  "language_id"
+    t.integer  "supporter_id"
+    t.string   "country_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "microposts", :force => true do |t|
     t.string   "content"

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lang_code: MyString
+  lang_name: MyString
+  short_code: MyString
+  i18n_identifier: MyString
+
+two:
+  lang_code: MyString
+  lang_name: MyString
+  short_code: MyString
+  i18n_identifier: MyString

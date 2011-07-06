@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "banner_chart"
+      },
+      title: {
+        text: "Clicks per day"
+      },
+      xAxis: {  
+        type: "datetime",
+        labels: {
+          formatter: function() {
+           return Highcharts.dateFormat("%b %e, %Y", this.value);
+          }
+        }
+      },
+      yAxis: {
+        title: {
+          text: "Number of Clicks"
+        }
+      },
+      tooltip: {
+        formatter: function() {
+         return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' + 
+                Highcharts.numberFormat(this.y, 0) + ' tribes';
+        }
+      },
+      series: [{
+        name: 'Clicks',
+        pointInterval: <%= 1.day * 1000 %>,
+        pointStart: <%= 1.week.ago.to_i * 1000 %>,
+        pointEnd: <%= Time.now.to_i * 1000 %>,
+        //data: (1.week.ago.to_date..Date.today).map {|date| @letter_campaign.letters.total_on(date)}.inspect
+        data: <%= letter_series(@letter_campaign.letters, 1.week.ago.to_date) %>  
+      }]
+    });
+  });
+</script>
+
+<div id="banner_chart" style="width:560px; height:300px;"></div>
+
+
+
+
+<p>
+  <b>Name:</b>
+  <%= @letter_campaign.name %>
+</p>
+
+<p>
+  <b>Slug:</b>
+  <%= @letter_campaign.slug %>
+</p>
+
+<p>
+  <b>Language:</b>
+  <%= @letter_campaign.language_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_letter_campaign_path(@letter_campaign) %> |
+<%= link_to 'Back', letter_campaigns_path %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  letter_campaign_id: 1
+  language_id: 1
+  supporter_id: 1
+  country_code: MyString
+
+two:
+  letter_campaign_id: 1
+  language_id: 1
+  supporter_id: 1
+  country_code: MyString

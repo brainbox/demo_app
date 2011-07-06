@@ -1,4 +1,10 @@
 DemoApp::Application.routes.draw do
+  resources :letter_campaigns
+
+  resources :letters
+
+  resources :languages
+
   resources :microposts
 
   resources :users
